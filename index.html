@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <style type="text/css">
+        body {  padding-bottom: 50px; }
+        button {padding: 10px 20px; margin: 8px; }
+        button::after { content: '-' attr( data-name) '( )';}
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>UIChatBox</h1>
+        <mark>使用前请详细阅读 文档 使用规则</mark>
+    </header>
+    <button tapmode onclick="fnOpen( this )" data-name="open"></button>
+
+    <button tapmode onclick="fnClose( this )" data-name="close"></button>
+
+    <button tapmode onclick="fnShow( this )" data-name="show"></button>
+
+    <button tapmode onclick="fnHide( this )" data-name="hide"></button>
+
+    <button tapmode onclick="fnPopupKeyboard( this )" data-name="popupKeyboard"></button>
+
+    <button tapmode onclick="fnCloseKeyboard( this )" data-name="closeKeyboard"></button>
+
+    <button tapmode onclick="fnPopupBoard( this )" data-name="popupBoard"></button>
+
+    <button tapmode onclick="fnCloseBoard( this )" data-name="closeBoard"></button>
+
+    <button tapmode onclick="fnValue( this )" data-name="value">设置</button>
+
+    <button tapmode onclick="fnValue( this )" data-name="value">获取</button>
+
+    <button tapmode onclick="fnInsertValue( this )" data-name="insertValue"></button>
+
+    <button tapmode onclick="fnAddEventListener( this )" data-name="addEventListener">监听 recordBtn 按钮</button>
+
+    <button tapmode onclick="fnAddEventListener( this )" data-name="addEventListener">监听 inputBar</button>
+
+    <button tapmode onclick="fnSetPlaceholder( this )" data-name="setPlaceholder"></button>
+
+    <button tapmode onclick="fnReloadExtraBoard( this )" data-name="reloadExtraBoard"></button>
+</body>
+</html>
+<script type="text/javascript">
+    var UIChatBox;
+    
+    function apiready(){
+        UIChatBox = api.require('UIChatBox');
+        api.setStatusBarStyle({
+            color: '#2390ce'
+        });
+    };
+    
+    function fnClose( el ){
+        UIChatBox.close();
+    }
+    
+    function fnShow( el ){
+        UIChatBox.show();
+    }
+    
+    function fnHide( el ){
+        UIChatBox.hide();
+    }   
+    
+    function fnPopupBoard( el){
+        UIChatBox.popupBoard({
+            target:'extras'
+        });
+    }
+    
+    function fnPopupKeyboard( el){
+        UIChatBox.popupKeyboard();
+    }
+    
+    function fnCloseKeyboard( el){
+        UIChatBox.closeKeyboard();
+    }
+    
+    function fnCloseBoard( el){
+        UIChatBox.closeBoard();
+    }
+    
+    function fnValue( el){
+        if( el.innerHTML === '设置' ){
+            UIChatBox.value({
+                msg: '使用 value 设置新值'
+            });
+        }else{
+            UIChatBox.value(function(ret, err){
+                if( ret ){
+                    alert( JSON.stringify( ret ) );
+                }else{
+                    alert( JSON.stringify( err ) );
+                }
+            });
+        }
+    }
+    
+    function fnInsertValue( el){
+        UIChatBox.insertValue({
+            msg: '使用 insertValue 插入的新值'
+        });
+    }
+    
+    
+    function fnAddEventListener( el){
+        if( el.innerHTML === '监听 recordBtn 按钮' ){
+            UIChatBox.addEventListener({
+                target: 'recordBtn',
+                name: 'press'
+            }, function( ret, err ){
+                if( ret ){
+                    alert( JSON.stringify( ret ) );
+                }else{
+                    alert( JSON.stringify( err ) );
+                }
+            });
+        }else{
+           UIChatBox.addEventListener({
+                target: 'inputBar',
+                name: 'move'
+            }, function( ret, err ){
+                if( ret ){
+                    alert( JSON.stringify( ret ) );
+                }else{
+                    alert( JSON.stringify( err ) );
+                }
+            });
+        }
+    }
+    
+    function fnSetPlaceholder( el){
+        UIChatBox.setPlaceholder({
+            placeholder: '修改了占位提示内容'
+        });
+    }
+    
+    function fnReloadExtraBoard( el){
+        UIChatBox.reloadExtraBoard({
+            extras: {
+                btns: [{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },]
+            }
+        });
+    }
+    
+    function fnOpen( el ){
+        UIChatBox.open({
+            placeholder: '输入发送内容',
+            autoFocus: true,
+            emotionPath: 'widget://image/emotion',
+            styles: {
+                extrasBtn: {
+                    normalImg: 'widget://image/add1.png'
+                },
+                speechBtn: {
+                    normalImg: 'widget://image/cam1.png'
+                },
+                indicator: {
+                    target: 'extrasPanel',
+                    color: '#c4c4c4',
+                    activeColor: '#9e9e9e'
+                },
+                sendBtn: {
+                    titleColor: '#4cc518',
+                    bg: '#999999' ,
+                    activeBg: '#46a91e',
+                    titleSize: 14
+                }
+            },
+            extras: {
+                titleSize: 10,
+                titleColor: '#a3a3a3',
+                btns: [{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                },{
+                    title: '图片',
+                    normalImg: 'widget://image/album1.png',
+                    activeImg: 'widget://image/album2.png'
+                },{
+                    title: '发送地址',
+                    normalImg: 'widget://image/loc1.png',
+                    activeImg: 'widget://image/loc2.png'
+                }]
+            }
+        }, function( ret, err ){
+            if( ret ){
+                alert( JSON.stringify( ret ) );
+            }else{
+                alert( JSON.stringify( err ) );
+            }
+        });
+    }
+</script>
